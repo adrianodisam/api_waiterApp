@@ -14,12 +14,15 @@ import { deleteProduct } from './app/useCases/Products/deleteProduct';
 import { updateCategory } from './app/useCases/categories/updateCategory';
 import { deleteCategory } from './app/useCases/categories/deleteCategory';
 import { updateProduct } from './app/useCases/Products/updateProduct';
+import { createPastUploads } from './app/useCases/Products/productUploads';
 
 export const router = Router();
+const diretorio:string = path.resolve(__dirname,'..','uploads');
+createPastUploads(diretorio);
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, callback) {
-      callback(null,path.resolve(__dirname,'..','uploads'));
+      callback(null,path.resolve(diretorio));
     },
     filename(req, file, callback){
       callback(null,`${Date.now()}-${file.originalname}`);
